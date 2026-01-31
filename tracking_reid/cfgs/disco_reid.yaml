@@ -1,0 +1,25 @@
+image_root : IMAGE_ROOT_PATH
+label_root : TRACKING_LABEL_ROOT_PATH
+
+model : 'ResNet_DISCO'
+
+# Dataloading
+batch_size : 8
+num_workers : 2
+input_size : [621,188]
+
+# Pretrained backbone
+pretrained_backbone_path : PRETRAINED_BACKBONE_DIR
+
+# Basis
+basis_dir : PRE_CALCULATED_BASIS_DIR
+basis : PRE_CALCULATED_BASIS_FILES_LIST
+permute : False
+
+# Training
+epochs : 20
+initial_lr : 0.001
+  
+# ETC
+seed : 42
+save_dir: SAVE_PATH
