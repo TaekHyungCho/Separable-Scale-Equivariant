@@ -4,11 +4,19 @@ In this repository, we briefly introduce our code and provide additional informa
 
 ## Environment
 ### Prerequisites
-1. mmcv-full == 2.0.1
-2. mmdetection >= 3.1.0
-    * This repository only includes modified parts of the mmdetection. For complete details, please clone the corresponding version.
-3. mmengine
-4. KITTI Dataset
+Before you begin, ensure you have met the following requirements:
+
+1. Python == 3.8.19
+2. PyTorch == 1.11.0 and torchvision == 0.12.0
+3. mmcv == 2.0.1 
+4. mmdet == 3.1.0
+   * This repository includes only the modified components of MMDetection. For the full framework, please clone the corresponding version.
+5. mmengine == 0.10.4
+6. [TrackEval](https://github.com/JonathonLuiten/TrackEval) == 1.0.dev1 
+7. KITTI Dataset
+
+---
+Detailed installation requirements are documented in the `requirements.txt` file. If you encounter any missing dependencies or issues during the setup process, please let us know by opening an Issue.
 
 ### Data
 Please run the following code to generate data pickle files.
