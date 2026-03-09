@@ -34,6 +34,7 @@ class KITTITrackingReID(Dataset):
         split : str,
         split_idxs : List,
         input_size: Tuple[int, int] = (621, 188),
+        img_norm_cfg : dict = None,
         pad_size_divisor: int = 32,
         min_visibility: float = 0.25,
         filter_classes: List[str] = ['Car', 'Van', 'Pedestrian'],
@@ -51,15 +52,21 @@ class KITTITrackingReID(Dataset):
         
         
         # Adjust input image size
-        self.input_w = input_size[0]  # 621 (resize target)
-        self.input_h = input_size[1]  # 188 (resize target)
-        self.padded_w = int(np.ceil(input_size[0] / 32) * 32)  # 640 (after padding)
-        self.padded_h = int(np.ceil(input_size[1] / 32) * 32)  # 192 (after padding)
+        self.input_w = input_size[0]
+        self.input_h = input_size[1]
+        self.padded_w = int(np.ceil(input_size[0] / pad_size_divisor) * pad_size_divisor)
+        self.padded_h = int(np.ceil(input_size[1] / pad_size_divisor) * pad_size_divisor)
         self.pad_size_divisor = pad_size_divisor
         
-        # BGR mean/std (MMDet ImageNet pretrained)
-        self.mean = np.array([103.53, 116.28, 123.675], dtype=np.float32)
-        self.std = np.array([1.0, 1.0, 1.0], dtype=np.float32)
+        # BGR mean/std
+        if img_norm_cfg is None:
+            img_norm_cfg = {
+                'mean': [103.53, 116.28, 123.675],
+                'std': [57.375,57.12,58.395]
+            }
+        self.img_norm_cfg = img_norm_cfg
+        self.mean = np.array(self.img_norm_cfg['mean'], dtype=np.float32)
+        self.std = np.array(self.img_norm_cfg['std'], dtype=np.float32)
         
         self.samples = []
         self.id_mapping = {}  # (seq_id, track_id) -> global_id
@@ -384,6 +391,7 @@ def create_kitti_reid_dataloaders(
     batch_size: int = 8,
     num_workers: int = 4,
     input_size: Tuple[int, int] = (621, 188),
+    img_norm_cfg: dict = None,
     min_visibility: float = 0.25,
     verbose : bool = False,
     **kwargs
@@ -404,6 +412,7 @@ def create_kitti_reid_dataloaders(
         split='train',
         split_idxs= train_file_idxs,
         input_size=input_size,
+        img_norm_cfg=img_norm_cfg,
         min_visibility=min_visibility,
         verbose = verbose,
         **kwargs
@@ -416,6 +425,7 @@ def create_kitti_reid_dataloaders(
         split='val',
         split_idxs= val_file_idxs,
         input_size=input_size,
+        img_norm_cfg=img_norm_cfg,
         min_visibility=min_visibility,
         verbose = verbose,
         **kwargs

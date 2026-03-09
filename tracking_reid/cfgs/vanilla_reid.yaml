@@ -7,6 +7,12 @@ model : 'ResNet'
 batch_size : 8
 num_workers : 2
 input_size : [621,188]
+## Use mean/std values matching the pretrained backbone to ensure consistency
+## Below normalization config based on our pretraining setup. Modify if necessary.
+img_norm_cfg : 
+    'mean': [103.53, 116.28, 123.675]
+    'std': [1.0, 1.0, 1.0]
+    
 
 # Pretrained backbone
 pretrained_backbone_path : 'tracking_reid/pretrained/vanilla_backbone.pth'

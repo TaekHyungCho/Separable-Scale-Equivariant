@@ -59,7 +59,7 @@ To utilize scale-equivariant convolutions, you must configure the basis function
 
     Please run the tracking_reid.train module with specific configuration files. For example:
     ```bash
-    python -m tracking_reid.train --cfg_path ${CONFIG_FILES}
+    python -m tracking_reid.train --cfg_path ${CONFIG_FILES} --val_idxs [idx1, idx2, ..., idxN]
     ```
 
     These modules require pre-trained backbone networks trained on the object detection task described above. You can specify the saved path of the pre-trained backbone network in the configuration file.

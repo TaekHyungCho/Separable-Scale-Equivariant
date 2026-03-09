@@ -119,6 +119,7 @@ def main(cfgs, val_idxs):
         batch_size = cfgs['batch_size'],
         num_workers = cfgs['num_workers'],
         input_size = tuple(cfgs['input_size']),
+        img_norm_cfg=cfgs['img_norm_cfg'],
         verbose = False)
     
 
